@@ -1,0 +1,2 @@
+mov r7, r7
+mov r7, r7

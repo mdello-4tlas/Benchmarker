@@ -1,5 +1,5 @@
 {
-    "version": 3,
+    "version": 5,
     "configurePresets": [
         {
             "name": "default",
@@ -10,6 +10,7 @@
             "cacheVariables": {
             }
         },
+
         {
             "name": "Debug",
             "inherits": "default",
@@ -19,6 +20,7 @@
         },
         {
             "name": "RelWithDebInfo",
+            "hidden": true,
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "RelWithDebInfo"
@@ -26,6 +28,7 @@
         },
         {
             "name": "Release",
+            "hidden": true,
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
@@ -33,28 +36,112 @@
         },
         {
             "name": "MinSizeRel",
+            "hidden": true,
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "MinSizeRel"
             }
+        },
+
+        {
+          "name": "Nucleo-F411",
+          "hidden": true,
+          "inherits": "default",
+          "environment": {
+            "TARGET_BOARD": "nucleo-f411"
+          }
+        },
+        {
+          "name": "STM32F3Discovery",
+          "hidden": true,
+          "inherits": "default",
+          "environment": {
+            "TARGET_BOARD": "stm32f3discovery"
+          }
+        },
+        {
+          "name": "Nucleo-U575",
+          "hidden": true,
+          "inherits": "default",
+          "environment": {
+            "TARGET_BOARD": "nucleo-u575"
+          }
+        },
+        {
+          "name": "EK-RA6M5",
+          "hidden": true,
+          "inherits": "default",
+          "environment": {
+            "TARGET_BOARD": "ek-ra6m5"
+          }
+        },
+        {
+          "name": "nRF54L15-DK",
+          "hidden": true,
+          "inherits": "default",
+          "environment": {
+            "TARGET_BOARD": "nrf54l15-dk"
+          }
+        },
+
+
+        {
+          "name": "Debug-F411",
+          "inherits": ["Nucleo-F411", "Debug"]
+        },
+        {
+          "name": "Debug-Discovery",
+          "inherits": ["STM32F3Discovery", "Debug"]
+        },
+        {
+          "name": "RelWithDebInfo-F411",
+          "inherits": ["Nucleo-F411", "RelWithDebInfo"]
+        },
+        {
+          "name": "RelWithDebInfo-Discovery",
+          "inherits": ["STM32F3Discovery", "RelWithDebInfo"]
+        },
+        {
+          "name": "RelWithDebInfo-U575",
+          "inherits": ["Nucleo-U575", "RelWithDebInfo"]
+        },
+        {
+          "name": "RelWithDebInfo-RA6M5",
+          "inherits": ["EK-RA6M5", "RelWithDebInfo"]
+        },
+        {
+          "name": "RelWithDebInfo-nRF54L15",
+          "inherits": ["nRF54L15-DK", "RelWithDebInfo"]
         }
     ],
     "buildPresets": [
         {
-            "name": "Debug",
-            "configurePreset": "Debug"
+          "name": "Debug-F411",
+          "configurePreset": "Debug-F411"
         },
         {
-            "name": "RelWithDebInfo",
-            "configurePreset": "RelWithDebInfo"
+          "name": "Debug-Discovery",
+          "configurePreset": "Debug-Discovery"
         },
         {
-            "name": "Release",
-            "configurePreset": "Release"
+            "name": "RelWithDebInfo-F411",
+            "configurePreset": "RelWithDebInfo-F411"
         },
         {
-            "name": "MinSizeRel",
-            "configurePreset": "MinSizeRel"
+          "name": "RelWithDebInfo-Discovery",
+          "configurePreset": "RelWithDebInfo-Discovery"
+        },
+        {
+          "name": "RelWithDebInfo-U575",
+          "configurePreset": "RelWithDebInfo-U575"
+        },
+        {
+          "name": "RelWithDebInfo-RA6M5",
+          "configurePreset": "RelWithDebInfo-RA6M5"
+        },
+        {
+          "name": "RelWithDebInfo-nRF54L15",
+          "configurePreset": "RelWithDebInfo-nRF54L15"
         }
     ]
 }

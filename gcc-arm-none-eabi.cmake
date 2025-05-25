@@ -6,7 +6,7 @@ set(CMAKE_CXX_COMPILER_FORCED TRUE)
 set(CMAKE_C_COMPILER_ID GNU)
 set(CMAKE_CXX_COMPILER_ID GNU)
 
-find_program(ARM_GCC gcc-arm-none-eabi)
+find_program(ARM_GCC arm-none-eabi-gcc)
 if(NOT ARM_GCC)
   message(FATAL_ERROR "arm-none-eabi-gcc not in PATH")
 endif()

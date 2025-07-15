@@ -1,4 +1,5 @@
-add_library(board OBJECT)
+add_library(board OBJECT
+        )
 target_include_directories(board PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 
 if (NOT DEFINED TARGET_BOARD AND NOT DEFINED ENV{TARGET_BOARD})

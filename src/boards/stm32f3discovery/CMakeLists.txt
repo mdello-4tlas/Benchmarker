@@ -3,6 +3,9 @@ set(BOARD_COMPILE_FLAGS
 )
 set_property(GLOBAL PROPERTY PROJECT_BOARD_COMPILE_FLAGS "${BOARD_COMPILE_FLAGS}")
 
+set(LINKER_SCRIPT
+        ${CMAKE_CURRENT_LIST_DIR}/STM32F303VCTx_FLASH.ld)
+
 target_sources(board PRIVATE
         stm32f3discovery-bsp.cpp
         ${CMAKE_CURRENT_LIST_DIR}/STM32F3xx/startup_stm32f303xc.s
@@ -98,3 +101,5 @@ target_compile_definitions(board PRIVATE USE_HAL_DRIVER STM32F303xC)
 target_compile_options(board PRIVATE ${BOARD_COMPILE_FLAGS})
 
 target_link_libraries(board PUBLIC CMSIS)
+
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE "-T${LINKER_SCRIPT}")

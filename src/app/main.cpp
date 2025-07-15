@@ -14,7 +14,7 @@ int main()
     board::init();
 
     [[maybe_unused]] uint32_t cycles {};
-    cycles = test_cyccnt_loop_aligned_0(1);
+    cycles = test_cyccnt_loop_aligned_0(10);
     while (true)
     {
 

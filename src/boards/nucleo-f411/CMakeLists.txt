@@ -3,6 +3,9 @@ set(BOARD_COMPILE_FLAGS
 )
 set_property(GLOBAL PROPERTY PROJECT_BOARD_COMPILE_FLAGS "${BOARD_COMPILE_FLAGS}")
 
+set(LINKER_SCRIPT
+        ${CMAKE_CURRENT_LIST_DIR}/STM32F411RETx_FLASH.ld)
+
 target_sources(board PRIVATE
         stm32-f411-bsp.cpp
         ${CMAKE_CURRENT_LIST_DIR}/STM32F4xx/startup_stm32f411xe.s
@@ -44,3 +47,5 @@ target_compile_definitions(board PRIVATE STM32F411xE)
 target_compile_options(board PRIVATE ${BOARD_COMPILE_FLAGS})
 
 target_link_libraries(board PUBLIC CMSIS)
+
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE "-T${LINKER_SCRIPT}")

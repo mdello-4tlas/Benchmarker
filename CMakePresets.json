@@ -83,6 +83,14 @@
             "TARGET_BOARD": "nrf54l15-dk"
           }
         },
+        {
+          "name": "nRF52840-DK",
+          "hidden": true,
+          "inherits": "default",
+          "environment": {
+            "TARGET_BOARD": "nrf52840-dk"
+          }
+        },
 
 
         {
@@ -112,6 +120,10 @@
         {
           "name": "RelWithDebInfo-nRF54L15",
           "inherits": ["nRF54L15-DK", "RelWithDebInfo"]
+        },
+        {
+          "name": "RelWithDebInfo-nRF52840",
+          "inherits": ["nRF52840-DK", "RelWithDebInfo"]
         }
     ],
     "buildPresets": [
@@ -142,6 +154,10 @@
         {
           "name": "RelWithDebInfo-nRF54L15",
           "configurePreset": "RelWithDebInfo-nRF54L15"
+        },
+        {
+          "name": "RelWithDebInfo-nRF52840",
+          "configurePreset": "RelWithDebInfo-nRF52840"
         }
     ]
 }

@@ -1,0 +1,51 @@
+stages:
+  - build
+
+# Pipeline triggers
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'                   # push to main
+    - if: '$CI_PIPELINE_SOURCE == "web"'                  # manual trigger
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'  # for MRs
+
+variables:
+  DOCKER_HOST: tcp://docker:2376
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_TLS_VERIFY: 1
+  DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+
+include:
+  - component: $CI_SERVER_FQDN/4tlas.io/fuze-ci-components/fuze-build@0.1.2
+    inputs:
+      fuze_image: "$FUZE_CONTAINER_IMAGE:$FUZEARM64_CONTAINER_VERSION"
+      fuze_git_keyfile: "$FUZE_CONTAINER_KEYFILE"
+      fuze_useremail: "$FUZE_USER_EMAIL"
+
+#-------------------------------------------------------------------------------
+# Anchors
+#-------------------------------------------------------------------------------
+.build_template: &build_anchor
+  stage: build
+  extends: .fuze-build
+  services:
+    - name: docker:24.0.5-dind
+      alias: docker
+  variables:
+    fuze_build_map: "fuze-build/benchmarker-fuze-demo.json"
+    results_root_folder: "."
+  artifacts:
+    name: "build-$CI_COMMIT_REF_SLUG"
+    when: always
+    paths:
+      - IMAGES/
+      - LOGS/
+      - "*-version.txt"
+  tags:
+    - 4tlas-arm64
+
+#-------------------------------------------------------------------------------
+# Jobs
+#-------------------------------------------------------------------------------
+
+build_job:
+  <<: *build_anchor

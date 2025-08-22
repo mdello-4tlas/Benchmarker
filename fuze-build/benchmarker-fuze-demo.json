@@ -1,0 +1,114 @@
+{
+  "description": "Build the benchmarker app for an embedded device",
+  "product_name": "benchmarker-fuze-demo",
+  "release_version": "255.255",
+  "build_targets": [ "benchmarker-f411" ],
+  "package_targets": [ "f411-app" ],
+  "variables": [
+    {
+      "name": "${ROOT_DIR}",
+      "value": "benchmarker"
+    },
+    {
+      "name": "${BUILD_OUT_DIR}",
+      "value": "build"
+    },
+    {
+      "name": "${F411_OUT_DIR}",
+      "value": "nucleo-f411-RelWithDebInfo-F411"
+    }
+  ],
+  "build": {
+    "description": "How to build the apps",
+    "name": "benchmarker-app",
+    "path": "${ROOT_DIR}",
+    "container": "533267112013.dkr.ecr.us-east-1.amazonaws.com/4tlas/build/benchmarker-app-build:v1.0",
+    "out": [
+      "${ROOT_DIR}/benchmarker-*.*",
+      "${ROOT_DIR}/${BUILD_OUT_DIR}"
+    ],
+    "cleanup": [
+      "${ROOT_DIR}/benchmarker-*.*",
+      "${ROOT_DIR}/${BUILD_OUT_DIR}"
+    ],
+    "workspace": {
+      "dirs_to_be_created": {
+        "common": []
+      },
+      "files_to_copy":{
+        "common":{
+          "files":[],
+          "dirs":[]
+        }
+      }
+    },
+    "build_steps": {
+      "build_commands": {
+        "benchmarker-f411": [
+          {
+            "path": "${ROOT_DIR}",
+            "build_lines": [
+              "echo ${FUZEID} > fuzeid",
+              "echo BENCHMARKER_F411_VERSION=${RELEASE_VERSION} > benchmarker-f411.dat",
+              "echo MAJOR=${MAJOR} > benchmarker-f411-version.txt",
+              "echo MINOR=${MINOR} >> benchmarker-f411-version.txt",
+              "echo FUZEID=${FUZEID} >> benchmarker-f411-version.txt",
+              "echo FUZEIDINT=${FUZEIDINT} >> benchmarker-f411-version.txt",
+              "echo RELEASE=${RELEASE_VERSION} >> benchmarker-f411-version.txt"
+            ]
+          },
+          {
+            "path": "${ROOT_DIR}",
+            "build_lines": [
+              "echo Building F411 Target",
+              "cmake -S . --preset RelWithDebInfo-F411",
+              "cmake --build --preset RelWithDebInfo-F411",
+              "echo DEBUG - What is available in build:",
+              "ls -lRa build"
+            ]
+          }
+        ]
+      }
+    },
+    "post_actions": {
+      "build_commands": {
+        "local": []
+      }
+    },
+    "dependencies": []
+  },
+  "packages": {
+    "output": "benchmarker_packages",
+    "content": {
+      "common":
+      {
+        "name": "",
+        "main_dir": "",
+        "is_dependency": true,
+        "files_to_copy": {
+          "files": [],
+          "dirs": []
+        }
+      },
+      "f411-app":
+      {
+        "name": "pkg-benchmarker",
+        "main_dir": "",
+        "is_dependency": true,
+        "files_to_copy": {
+          "files": [
+            {
+              "src": "${ROOT_DIR}/benchmarker-f411-version.txt",
+              "dest": "version_benchmarker-f411.txt"
+            },
+            {
+              "src": "${ROOT_DIR}/${BUILD_OUT_DIR}/${F411_OUT_DIR}/Benchmarker.*",
+              "dest": "apps/nucleo-f411-RelWithDebInfo-F411"
+            }
+          ],
+          "dirs": []
+        }
+      }
+    }
+  }
+}
